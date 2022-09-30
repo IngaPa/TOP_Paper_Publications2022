@@ -1,4 +1,4 @@
-# TOP_Paper_Publications2022_
+# TOP_Paper_Publications2022
 
 # IDEA
 This project was about analyzing policies of two thousand journals within the framework of eight TOP standards: 
