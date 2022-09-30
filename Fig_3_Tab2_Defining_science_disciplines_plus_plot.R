@@ -243,8 +243,66 @@ round(100*table(SCOPUS_category)/length(SCOPUS_category))
           #
           
           
+          #############
+          # statistics for table - per discipline per standard statistics
+          Per_discipline_per_guideline_stat.c=do.call("cbind", for_list)
+          t=Per_discipline_per_guideline_stat.c[,c(1,4,7,10,13)]
           
           
+          
+          library(pheatmap)
+          
+          (apply(t,2,function(x)round(100*x/sum(x))))
+          
+          # Multidisc..value Social .value
+          # Data.citation.score                                        28            24
+          # Data.transparency.score                                    18            20
+          # Analysis.code.transparency.score                           12            10
+          # Materials.transparency.score                                5             8
+          # Design...analysis.reporting.guidelines.score               17             9
+          # Study.preregistration.score                                 4             5
+          # Analysis.plan.preregistration.score                         4             4
+          # Replication.score                                           6             8
+          # Registered.reports...publication.bias.score                 4             7
+          # Open.science.badges.score                                   2             5
+          # Physical .value Life .value
+          # Data.citation.score                                       30          25
+          # Data.transparency.score                                   21          18
+          # Analysis.code.transparency.score                          13          13
+          # Materials.transparency.score                               9           7
+          # Design...analysis.reporting.guidelines.score               9          16
+          # Study.preregistration.score                                5           6
+          # Analysis.plan.preregistration.score                        5           5
+          # Replication.score                                          6           6
+          # Registered.reports...publication.bias.score                1           2
+          # Open.science.badges.score                                  2           1
+          # Health .value
+          # Data.citation.score                                     27
+          # Data.transparency.score                                 22
+          # Analysis.code.transparency.score                        15
+          # Materials.transparency.score                             3
+          # Design...analysis.reporting.guidelines.score            22
+          # Study.preregistration.score                              3
+          # Analysis.plan.preregistration.score                      3
+          # Replication.score                                        4
+          # Registered.reports...publication.bias.score              2
+          # Open.science.badges.score                                1
+          
+          for.heatmap=(apply(t,2,function(x)round(100*x/sum(x))))
+          colnames(for.heatmap)=str_replace(colnames(for.heatmap)," \\.value","")
+          rownames(for.heatmap)=str_replace(rownames(for.heatmap)," \\.score","")
+          rownames(for.heatmap)=str_replace(rownames(for.heatmap),"\\.score","")
+          rownames(for.heatmap)=str_replace(rownames(for.heatmap),"\\."," ")
+          rownames(for.heatmap)[rownames(for.heatmap)=="Registered reports...publication.bias"]="Registered reports"
+          rownames(for.heatmap)[rownames(for.heatmap)=="Design ..analysis.reporting.guidelines"]="Design analysis reporting.guidelines"
+          colnames(for.heatmap)[1]="Multidisc."
+           
+          png("C:/Users/ipatarc/Desktop/PR_TOP/Supp_Figure_Heatmap.png", 
+              width =700,height = 900)
+          
+           pheatmap( for.heatmap,display_numbers = T,cluster_rows = F, fontsize_row=20,fontsize_col = 20,fontsize_number = 17)
+          
+          dev.off()
           
           # DOING cosmetics
               colnames(Per_discipline_per_guideline_stat)=c("Journals","Discipline","TOP_policy")
